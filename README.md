@@ -42,6 +42,8 @@ But the big advantage of USB was that it supplies power,
 and did away with the need for a special 9-pin connector with a
 power connector on the back.
 Can we find the serial protocols for these old tablets?
+I have a Wacom GD-1212-R, where '1212' represents the size (12 inches
+square) and 'R' means RS-232.
 
 ## Any Others? ##
 
