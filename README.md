@@ -6,6 +6,8 @@ They all have serial (RS-232) connections and some of them are powered that way 
 
 Many early PC mice were connected via RS-232.
 Trackballs were interfaced that way as well.
+I have an A4 Tech WT-7P serial trackball that can operate in either
+"PC" 3-button or "MS" 2-button modes.
 
 ## Joysticks ##
 
