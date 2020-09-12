@@ -8,6 +8,8 @@ Many early PC mice were connected via RS-232.
 Trackballs were interfaced that way as well.
 I have an A4 Tech WT-7P serial trackball that can operate in either
 "PC" 3-button or "MS" 2-button modes.
+I've also recently acquired a Microsoft Easyball and a
+Truedox 300 trackball.
 
 ## Joysticks ##
 
@@ -46,6 +48,11 @@ power connector on the back.
 Can we find the serial protocols for these old tablets?
 I have a Wacom GD-1212-R, where '1212' represents the size (12 inches
 square) and 'R' means RS-232.
+
+## Keyboards ##
+
+Several vendors supply add-on numeric keypads for laptops.
+I have one which has a serial interface, the Genovation 623A.
 
 ## Any Others? ##
 
