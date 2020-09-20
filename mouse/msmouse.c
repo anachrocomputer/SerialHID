@@ -107,16 +107,16 @@ int MouseRecv(char *const str)
 
 int Identify(void)
 {
-   int RTS_flag;
+   int rtsFlag;
    char buf[2];
 
-   RTS_flag = TIOCM_RTS;
+   rtsFlag = TIOCM_RTS;
 
-   ioctl(Fd,TIOCMBIC,&RTS_flag);//Clear RTS pin
+   ioctl(Fd, TIOCMBIC, &rtsFlag);  /* Clear RTS pin */
 
    sleep(1);
 
-   ioctl(Fd,TIOCMBIS,&RTS_flag);//Set RTS pin
+   ioctl(Fd, TIOCMBIS, &rtsFlag);  /* Set RTS pin */
    
    if (read(Fd, buf, 1) < 0) {
       perror("read");
@@ -126,7 +126,7 @@ int Identify(void)
    if (buf[0] == 'M')
       puts("Microsoft Mouse");
    else
-      puts("Unrecognised device");
+      printf("Unrecognised device: 0x%02x\n", buf[0]);
 
    return (0);
 }
@@ -211,13 +211,12 @@ void PrintMousePacket(const unsigned char *const buf)
    dx = buf[1] + ((buf[0] & 0x03) << 6);   
    dy = buf[2] + ((buf[0] & 0x0C) << 4);
 
-   printf("%s dx: %d, dy: %d\n", buttons, dx, dy);
+   printf("%s dx: %3d, dy: %3d\n", buttons, dx, dy);
 }
 
 
 int main (int argc, char *argv[])
 {
-   int i;
    char buf[8];
    
    /* Open the serial port connection to the mouse */
@@ -233,8 +232,7 @@ int main (int argc, char *argv[])
       PrintMousePacket(buf);
    }
    
-   
    close(Fd);
    
-   return 0;
+   return (0);
 }
