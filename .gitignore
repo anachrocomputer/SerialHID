@@ -1,0 +1,4 @@
+*.o
+mouse/msmouse
+mouse/pcmouse
+spaceball/sb4000
