@@ -6,7 +6,8 @@ They all have serial (RS-232) connections and some of them are powered that way 
 
 Many early PC mice were connected via RS-232.
 Most had two or three buttons,
-but there was the Prohance Power Mouse 50 that had 14 buttons.
+but there was the Prohance Power Mouse 50 that had 14 buttons,
+and the Prohance Power Track 100 with a total of 40 buttons.
 Trackballs were interfaced that way as well.
 I have an A4 Tech WT-7P serial trackball that can operate in either
 "PC" 3-button or "MS" 2-button modes.
@@ -46,6 +47,8 @@ device is the button-box.
 It usually had lights as well as buttons or keys.
 The classic example is the IBM Lighted Program Function Keyboard (LPFK),
 model 6094-020.
+That Prohance Power Track 100 could probably be regarded as a button-box
+with a built-in trackball.
 
 ## Keyboards ##
 
