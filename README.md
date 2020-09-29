@@ -73,6 +73,13 @@ Can we find the serial protocols for these old tablets?
 I have a Wacom GD-1212-R, where '1212' represents the size (12 inches
 square) and 'R' means RS-232.
 
+## Swipe Card Readers ##
+
+Not sure if this is really a user-interface device or not,
+but before we had USB, we had swipe card readers with serial interfaces
+(and PS/2 as well).
+What protocol and commands do they use?
+
 ## Any Others? ##
 
 We can buy USB-interface flight control yokes and throttle quadrants.
