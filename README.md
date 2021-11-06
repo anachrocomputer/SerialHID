@@ -7,7 +7,9 @@ They all have serial (RS-232) connections and some of them are powered that way 
 Many early PC mice were connected via RS-232.
 Most had two or three buttons,
 but there was the Prohance Power Mouse 50 that had 14 buttons,
-and the Prohance Power Track 100 with a total of 40 buttons.
+and the
+<A HREF="https://www.flickr.com/photos/dvanzuijlekom/15723074469">Prohance Power Mouse 100</A>
+with a total of 40 buttons.
 Trackballs were interfaced that way as well.
 I have an A4 Tech WT-7P serial trackball that can operate in either
 "PC" 3-button or "MS" 2-button modes.
@@ -23,6 +25,19 @@ have external power supplies.
 Some joysticks were serial, such as the Logitech Wingman Force Feedback,
 whereas the Microsoft Sidewinder Force Feedback used the MIDI port included in
 later versions of the PC game port.
+
+## Displays ##
+
+Not something that is commonly seen as a HID,
+but it surely is one: the display.
+How about the customer display or pole display of a cash register,
+till, or Point-Of-Sale computer?
+I have the Wincor-Nixdorf BA63 customer display,
+a two-line by 20-character Vacuum Fluorescent Display (VFD).
+Other displays are bigger (e.g. the 4-line BA66) and/or
+use other display technologies (e.g. LCD).
+The BA63 is powered by 12V supplied through the same cable as the RS-232
+serial interface.
 
 ## Spaceballs ##
 
@@ -47,8 +62,9 @@ device is the button-box.
 It usually had lights as well as buttons or keys.
 The classic example is the IBM Lighted Program Function Keyboard (LPFK),
 model 6094-020.
-That Prohance Power Track 100 could probably be regarded as a button-box
-with a built-in trackball.
+That
+<A HREF="https://www.flickr.com/photos/dvanzuijlekom/15723074469">Prohance Power Mouse 100</A>
+could probably be regarded as a button-box with a built-in mouse.
 
 ## Keyboards ##
 
