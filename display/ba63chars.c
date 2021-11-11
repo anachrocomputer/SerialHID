@@ -14,7 +14,7 @@ const int ESC = 0x1b;
 const int GS = 0x1d;
 
 
-void print (const char *str)
+void display(const char *str)
 {
    int n = strlen (str);
    
@@ -91,11 +91,11 @@ int main (int argc, char argv[])
    
    Fd = openBA63Port ("/dev/ttyUSB0");
 
-// print ("\x1bR\x03");       // Select UK character set
-// print ("\x1bR1");       // Select code page 850
-// print ("\x1bR2");       // Select code page 852
-   print ("\x1bR4");       // Select code page 858
-   print ("\x1b[H\x1b[2J");   // Home cursor and clear screen
+// display("\x1bR\x03");       // Select UK character set
+// display("\x1bR1");       // Select code page 850
+// display("\x1bR2");       // Select code page 852
+   display("\x1bR4");       // Select code page 858
+   display("\x1b[H\x1b[2J");   // Home cursor and clear screen
    
    for (ch = 0; ch < 256; ch += 32) {
       for (i = 0; i < 16; i++)
@@ -104,7 +104,7 @@ int main (int argc, char argv[])
       buf[16] = '\0';
       
       sprintf (str, "%02x: %s\r\n", ch, buf);
-      print (str);
+      display(str);
    
       for (i = 0; i < 16; i++)
          buf[i] = safe_char (ch + i + 16);
@@ -112,7 +112,7 @@ int main (int argc, char argv[])
       buf[16] = '\0';
       
       sprintf (str, "%02x: %s\r", ch + 16, buf);
-      print (str);
+      display(str);
    
       sleep (2);
    }
@@ -123,9 +123,9 @@ int main (int argc, char argv[])
    
    buf[20] = 0;
    
-   print (buf);
-   print ("\r\n");
-   print (buf);
+   display(buf);
+   display("\r\n");
+   display(buf);
 
    close (Fd);
    

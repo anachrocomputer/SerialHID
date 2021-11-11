@@ -13,7 +13,7 @@ int Fd = 0;
 const int ESC = 0x1b;
 
 
-void print (const char *str)
+void display(const char *str)
 {
    int n = strlen (str);
    
@@ -71,33 +71,33 @@ int main (int argc, char argv[])
 {
    Fd = openBA63Port ("/dev/ttyUSB0");
 
-// print ("\x1bR\x03");       // Select UK character set
-   print ("\x1bR\x06");       // Select Italy character set
+// display("\x1bR\x03");       // Select UK character set
+   display("\x1bR\x06");       // Select Italy character set
 
    for (;;) {
-      print ("\x1b[H\x1b[2J");   // Home cursor and clear screen
+      display("\x1b[H\x1b[2J");   // Home cursor and clear screen
       
       //      12345678901234567890
-      print (" BRISTOL HACKSPACE\r\n");
-      print ("  BV Studios 2014");
+      display(" BRISTOL HACKSPACE\r\n");
+      display("  BV Studios 2014");
       
       sleep (5);
       
-      print ("\x1b[H\x1b[2J");
-      print (" BRISTOL HACKSPACE\r\n");
-      print ("  John Honniball");
+      display("\x1b[H\x1b[2J");
+      display(" BRISTOL HACKSPACE\r\n");
+      display("  John Honniball");
 
       sleep (5);
 
-      print ("\x1b[H\x1b[2J");
-      print ("FUN WITH FLAT-BED\r\n");
-      print ("PEN PLOTTERS");
+      display("\x1b[H\x1b[2J");
+      display("FUN WITH FLAT-BED\r\n");
+      display("PEN PLOTTERS");
       
       sleep (5);
 
-      print ("\x1b[H\x1b[2J");
-      print ("@anachrocomputer\r\n"); 
-      print ("                ");
+      display("\x1b[H\x1b[2J");
+      display("@anachrocomputer\r\n");
+      display("                ");
       
       sleep (5);
    }

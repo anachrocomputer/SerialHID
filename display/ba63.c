@@ -13,7 +13,7 @@ int Fd = 0;
 const int ESC = 0x1b;
 
 
-void print (const char *str)
+void display(const char *str)
 {
    int n = strlen (str);
    
@@ -71,56 +71,56 @@ int main (int argc, char argv[])
 {
    Fd = openBA63Port ("/dev/ttyUSB0");
 
-   print ("\x1bR\x03");       // Select UK character set
-   print ("\x1b[H\x1b[2J");   // Home cursor and clear screen
-   print ("UNEXPECTED ITEM IN\r\n");
-   print ("BAGGING AREA");
+   display("\x1bR\x03");       // Select UK character set
+   display("\x1b[H\x1b[2J");   // Home cursor and clear screen
+   display("UNEXPECTED ITEM IN\r\n");
+   display("BAGGING AREA");
    
    sleep (5);
    
-   print ("\x1b[H\x1b[2J");
-   print ("NOTES ARE DISPENSED\r\n");
-   print ("BELOW THE SCANNER");
+   display("\x1b[H\x1b[2J");
+   display("NOTES ARE DISPENSED\r\n");
+   display("BELOW THE SCANNER");
 
    sleep (5);
    
-   print ("\x1b[H\x1b[2J");
-   print ("404 CREDIT CARD\r\n");
-   print ("   NOT FOUND");
+   display("\x1b[H\x1b[2J");
+   display("404 CREDIT CARD\r\n");
+   display("   NOT FOUND");
 
    sleep (5);
 
-   print ("\x1b[H\x1b[2J");
-   print ("  WARP CORE BREACH\r\n");
-   print ("   ** IMMINENT **");
+   display("\x1b[H\x1b[2J");
+   display("  WARP CORE BREACH\r\n");
+   display("   ** IMMINENT **");
 
    sleep (5);
 
-   print ("\x1b[H\x1b[2J");
-   print ("   ALL YOUR BASE\r\n");
-   print ("  ARE BELONG TO US");
+   display("\x1b[H\x1b[2J");
+   display("   ALL YOUR BASE\r\n");
+   display("  ARE BELONG TO US");
 
    sleep (5);
 
-   print ("\x1b[H\x1b[2J");
-   print ("Soon may\r\n");
-   print (" the Wellerman come");
+   display("\x1b[H\x1b[2J");
+   display("Soon may\r\n");
+   display(" the Wellerman come");
    sleep (3);
-   print ("\x1b[H\x1b[2J");
-   print ("To bring us sugar\r\n");
-   print (" and tea and rum");
+   display("\x1b[H\x1b[2J");
+   display("To bring us sugar\r\n");
+   display(" and tea and rum");
 
    sleep (5);
 
-   print ("\x1b[H\x1b[2J");
-   print ("   Four Seasons\r\n");
-   print (" Total Landscaping");
+   display("\x1b[H\x1b[2J");
+   display("   Four Seasons\r\n");
+   display(" Total Landscaping");
 
    sleep (5);
 
-   print ("\x1b[H\x1b[2J");
-   print ("        EVER\r\n");
-   print ("        GIVEN");
+   display("\x1b[H\x1b[2J");
+   display("        EVER\r\n");
+   display("        GIVEN");
 
    close (Fd);
    

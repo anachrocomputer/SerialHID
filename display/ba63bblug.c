@@ -13,7 +13,7 @@ int Fd = 0;
 const int ESC = 0x1b;
 
 
-void print (const char *str)
+void display(const char *str)
 {
    int n = strlen (str);
    
@@ -71,21 +71,21 @@ int main (int argc, char argv[])
 {
    Fd = openBA63Port ("/dev/ttyUSB0");
 
-// print ("\x1bR\x03");       // Select UK character set
-   print ("\x1bR\x06");       // Select Italy character set
+// display("\x1bR\x03");       // Select UK character set
+   display("\x1bR\x06");       // Select Italy character set
 
    for (;;) {
-      print ("\x1b[H\x1b[2J");   // Home cursor and clear screen
+      display("\x1b[H\x1b[2J");   // Home cursor and clear screen
       
       //      12345678901234567890
-      print ("  BRISTOL AND BATH\r\n");
-      print ("  LINUX USER GROUP");
+      display("  BRISTOL AND BATH\r\n");
+      display("  LINUX USER GROUP");
       
       sleep (5);
       
-      print ("\x1b[H\x1b[2J");
-      print ("  Bristol and Bath\r\n");
-      print ("  Linux User Group");
+      display("\x1b[H\x1b[2J");
+      display("  Bristol and Bath\r\n");
+      display("  Linux User Group");
 
       sleep (5);
    }

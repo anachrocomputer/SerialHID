@@ -14,7 +14,7 @@ int Fd = 0;
 const int ESC = 0x1b;
 
 
-void print(const char *str)
+void display(const char *str)
 {
    int n = strlen (str);
    
@@ -118,10 +118,10 @@ void cursor_rc(int row, int col)
 
 void set_code_page(int page)
 {
-// print ("\x1bR\x03");       // Select UK character set
-// print ("\x1bR1");       // Select code page 850
-// print ("\x1bR2");       // Select code page 852
-// print ("\x1bR4");       // Select code page 858
+// display("\x1bR\x03");       // Select UK character set
+// display("\x1bR1");       // Select code page 850
+// display("\x1bR2");       // Select code page 852
+// display("\x1bR4");       // Select code page 858
    char buf[3];
    
    buf[0] = ESC;
@@ -139,17 +139,17 @@ int main(int argc, char argv[])
    
    Fd = openBA63Port("/dev/ttyUSB0");
 
-   print("\x1bR\x03");       // Select UK character set
+   display("\x1bR\x03");       // Select UK character set
    clear_screen();
    cursor_home();
-   print("TIME_T:\r\n");
+   display("TIME_T:\r\n");
    
    printf("time_t: %lu bytes\n", sizeof (sec));
    
    for (;;) {
       time(&sec);
       sprintf(buf, "%lu\r", sec);
-      print(buf);
+      display(buf);
       
       sleep(1);
    }

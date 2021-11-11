@@ -17,7 +17,7 @@ int Fd = -1;
 FILE *Dmmfp;
 
 
-void print (const char *str)
+void display(const char *str)
 {
    int n = strlen (str);
    
@@ -76,10 +76,10 @@ void cursor_rc (int row, int col)
 
 void set_code_page (int page)
 {
-// print ("\x1bR\x03");       // Select UK character set
-// print ("\x1bR1");       // Select code page 850
-// print ("\x1bR2");       // Select code page 852
-// print ("\x1bR4");       // Select code page 858
+// display("\x1bR\x03");       // Select UK character set
+// display("\x1bR1");       // Select code page 850
+// display("\x1bR2");       // Select code page 852
+// display("\x1bR4");       // Select code page 858
    char buf[3];
    
    buf[0] = ESC;
@@ -383,9 +383,9 @@ int main (int argc, char argv[])
       
       printf ("[%s %s %s] %d\n", str, units, modes, lin[11]);
       cursor_home ();
-      print (str);
-      print (units);
-      print (acdc);
+      display(str);
+      display(units);
+      display(acdc);
       clear_to_eol ();
       
       cursor_rc (2, 1);
@@ -394,10 +394,10 @@ int main (int argc, char argv[])
          barg = lin[11] & 0x7f;
          
          for (i = 0; i < (barg / 3); i++)
-            print (blob);
+            display(blob);
             
          if ((barg % 3) == 2)
-            print (halfblob);
+            display(halfblob);
       }
 
       clear_to_eol ();
