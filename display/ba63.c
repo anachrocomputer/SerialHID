@@ -101,6 +101,28 @@ int main (int argc, char argv[])
    print ("   ALL YOUR BASE\r\n");
    print ("  ARE BELONG TO US");
 
+   sleep (5);
+
+   print ("\x1b[H\x1b[2J");
+   print ("Soon may\r\n");
+   print (" the Wellerman come");
+   sleep (3);
+   print ("\x1b[H\x1b[2J");
+   print ("To bring us sugar\r\n");
+   print (" and tea and rum");
+
+   sleep (5);
+
+   print ("\x1b[H\x1b[2J");
+   print ("   Four Seasons\r\n");
+   print (" Total Landscaping");
+
+   sleep (5);
+
+   print ("\x1b[H\x1b[2J");
+   print ("        EVER\r\n");
+   print ("        GIVEN");
+
    close (Fd);
    
    return (0);
