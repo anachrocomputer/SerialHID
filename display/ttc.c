@@ -4,9 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
+#include <unistd.h>
 #include <termios.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
 
 int Fd = 0;
@@ -144,11 +144,11 @@ int main(int argc, char argv[])
    cursor_home();
    print("TIME_T:\r\n");
    
-   printf("time_t: %d bytes\n", sizeof (sec));
+   printf("time_t: %lu bytes\n", sizeof (sec));
    
    for (;;) {
       time(&sec);
-      sprintf(buf, "%ld\r", sec);
+      sprintf(buf, "%lu\r", sec);
       print(buf);
       
       sleep(1);
