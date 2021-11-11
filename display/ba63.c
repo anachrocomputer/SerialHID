@@ -95,6 +95,12 @@ int main (int argc, char argv[])
    print ("  WARP CORE BREACH\r\n");
    print ("   ** IMMINENT **");
 
+   sleep (5);
+
+   print ("\x1b[H\x1b[2J");
+   print ("   ALL YOUR BASE\r\n");
+   print ("  ARE BELONG TO US");
+
    close (Fd);
    
    return (0);
