@@ -4,9 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include <termios.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
 
 int Fd = 0;
@@ -86,7 +85,7 @@ int safe_char (int ch)
 int main (int argc, char argv[])
 {
    int i;
-   char str[32];
+   char str[64];
    int ch;
    char buf[32];
    
