@@ -135,20 +135,26 @@ void set_code_page(int page)
 int main(int argc, char argv[])
 {
    time_t sec;
+   struct tm *tm_p;
    char buf[32];
    
    Fd = openBA63Port("/dev/ttyUSB0");
 
    display("\x1bR\x03");       // Select UK character set
    clear_screen();
-   cursor_home();
-   display("TIME_T:\r\n");
    
    printf("time_t: %lu bytes\n", sizeof (sec));
    
    for (;;) {
       time(&sec);
-      sprintf(buf, "%lu\r", sec);
+      tm_p = localtime(&sec);
+
+      cursor_home();
+
+      strftime(buf, sizeof (buf), "%Y-%m-%d %H:%M:%S\r\n", tm_p);
+      display(buf);
+
+      sprintf(buf, "time_t: %lu\r", sec);
       display(buf);
       
       sleep(1);
