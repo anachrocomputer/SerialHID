@@ -10,23 +10,23 @@
 
 #define MAXLINE (64)
 
-#define ESC (27)
+#define ESC (0x1b)
 
 
 int Fd = -1;
 FILE *Dmmfp;
 
 
-void display(const char *str)
+void display(const char *const str)
 {
-   int n = strlen (str);
+   const int n = strlen(str);
    
-   if (write (Fd, str, n) != n)
-      perror ("write");
+   if (write(Fd, str, n) != n)
+      perror("write");
 }
 
 
-void clear_screen (void)
+void clear_screen(void)
 {
    char buf[4];
    
@@ -35,11 +35,11 @@ void clear_screen (void)
    buf[2] = '2';
    buf[3] = 'J';
    
-   write (Fd, buf, 4);
+   write(Fd, buf, 4);
 }
 
 
-void clear_to_eol (void)
+void clear_to_eol(void)
 {
    char buf[4];
    
@@ -48,11 +48,11 @@ void clear_to_eol (void)
    buf[2] = '0';
    buf[3] = 'K';
    
-   write (Fd, buf, 4);
+   write(Fd, buf, 4);
 }
 
 
-void cursor_home (void)
+void cursor_home(void)
 {
    char buf[3];
    
@@ -60,23 +60,23 @@ void cursor_home (void)
    buf[1] = '[';
    buf[2] = 'H';
    
-   write (Fd, buf, 3);
+   write(Fd, buf, 3);
 }
 
 
-void cursor_rc (int row, int col)
+void cursor_rc(const int row, const int col)
 {
    char buf[MAXLINE];
    
-   sprintf (buf, "%c[%d;%dH", ESC, row, col);
+   sprintf(buf, "%c[%d;%dH", ESC, row, col);
    
-   write (Fd, buf, strlen (buf));
+   write(Fd, buf, strlen(buf));
 }
 
 
-void set_code_page (int page)
+void set_code_page(const int page)
 {
-// display("\x1bR\x03");       // Select UK character set
+// display("\x1bR\x03");    // Select UK character set
 // display("\x1bR1");       // Select code page 850
 // display("\x1bR2");       // Select code page 852
 // display("\x1bR4");       // Select code page 858
@@ -86,228 +86,226 @@ void set_code_page (int page)
    buf[1] = 'R';
    buf[2] = page;
    
-   write (Fd, buf, 3);
+   write(Fd, buf, 3);
 }
 
 
-static int openDMMPort (const char *port)
+static int openDMMPort(const char *const port)
 {
-   int fd;
    struct termios tbuf;
    long int fdflags;
 
-   fd = open (port, O_RDWR | O_NOCTTY | O_NDELAY);
+   const int fd = open(port, O_RDWR | O_NOCTTY | O_NDELAY);
    
    if (fd < 0) {
-      perror (port);
-      exit (1);
+      perror(port);
+      exit(1);
    }
    
-   if ((fdflags = fcntl (fd, F_GETFL, NULL)) < 0) {
-      perror ("fcntl GETFL");
-      exit (1);
+   if ((fdflags = fcntl(fd, F_GETFL, NULL)) < 0) {
+      perror("fcntl GETFL");
+      exit(1);
    }
    
    fdflags &= ~O_NDELAY;
    
-   if (fcntl (fd, F_SETFL, fdflags) < 0) {
-      perror ("fcntl SETFL");
-      exit (1);
+   if (fcntl(fd, F_SETFL, fdflags) < 0) {
+      perror("fcntl SETFL");
+      exit(1);
    }
 
-   tcgetattr (fd, &tbuf);
+   tcgetattr(fd, &tbuf);
    
-   cfsetospeed (&tbuf, B2400);
-   cfsetispeed (&tbuf, B2400);
-   cfmakeraw (&tbuf);
+   cfsetospeed(&tbuf, B2400);
+   cfsetispeed(&tbuf, B2400);
+   cfmakeraw(&tbuf);
 
    tbuf.c_cflag |= CLOCAL;
    
-   if (tcsetattr (fd, TCSAFLUSH, &tbuf) < 0) {
-      perror ("tcsetattr");
-      return (-1);
+   if (tcsetattr(fd, TCSAFLUSH, &tbuf) < 0) {
+      perror("tcsetattr");
+      return(-1);
    }
    
-   if ((Dmmfp = fdopen (fd, "rw")) == NULL) {
-      perror ("fdopen");
-      return (-1);
+   if ((Dmmfp = fdopen(fd, "rw")) == NULL) {
+      perror("fdopen");
+      return(-1);
    }
    
    return (fd);
 }
 
 
-static int openBA63Port (const char *port)
+static int openBA63Port(const char *port)
 {
-   int fd;
    struct termios tbuf;
    long int fdflags;
 
-   fd = open (port, O_RDWR | O_NOCTTY | O_NDELAY);
+   const int fd = open(port, O_RDWR | O_NOCTTY | O_NDELAY);
    
    if (fd < 0) {
-      perror (port);
-      exit (1);
+      perror(port);
+      exit(1);
    }
    
-   if ((fdflags = fcntl (fd, F_GETFL, NULL)) < 0) {
-      perror ("fcntl GETFL");
-      exit (1);
+   if ((fdflags = fcntl(fd, F_GETFL, NULL)) < 0) {
+      perror("fcntl GETFL");
+      exit(1);
    }
    
    fdflags &= ~O_NDELAY;
    
-   if (fcntl (fd, F_SETFL, fdflags) < 0) {
-      perror ("fcntl SETFL");
-      exit (1);
+   if (fcntl(fd, F_SETFL, fdflags) < 0) {
+      perror("fcntl SETFL");
+      exit(1);
    }
 
-   if (tcgetattr (fd, &tbuf) < 0) {
-      perror ("tcgetattr");
-      exit (1);
+   if (tcgetattr(fd, &tbuf) < 0) {
+      perror("tcgetattr");
+      exit(1);
    }
    
-   cfsetospeed (&tbuf, B9600);
-   cfsetispeed (&tbuf, B9600);
-   cfmakeraw (&tbuf);
+   cfsetospeed(&tbuf, B9600);
+   cfsetispeed(&tbuf, B9600);
+   cfmakeraw(&tbuf);
    
    tbuf.c_cflag |= PARENB | PARODD | CLOCAL;
    
-   if (tcsetattr (fd, TCSAFLUSH, &tbuf) < 0) {
-      perror ("tcsetattr");
-      exit (1);
+   if (tcsetattr(fd, TCSAFLUSH, &tbuf) < 0) {
+      perror("tcsetattr");
+      exit(1);
    }
    
    return (fd);
 }
 
 
-int getReading (FILE *fp, char *buf)
+int getReading(FILE *fp, char *buf)
 {
    char *p;
    char lin[MAXLINE];
    
-   p = fgets (lin, MAXLINE, fp);
+   p = fgets(lin, MAXLINE, fp);
 
-   memcpy (buf, lin, 14);
+   memcpy(buf, lin, 14);
    
    return (1);
 }
 
 
-void appendSB1 (char *str, int sb1) 
+void appendSB1(char *str, const int sb1)
 {
    if (sb1 & 0x01)
-      strcat (str, " BPN");
+      strcat(str, " BPN");
 
    if (sb1 & 0x02)
-      strcat (str, " HOLD");
+      strcat(str, " HOLD");
 
    if (sb1 & 0x04)
-      strcat (str, " REL");
+      strcat(str, " REL");
 
    if (sb1 & 0x08)
-      strcat (str, " AC");
+      strcat(str, " AC");
 
    if (sb1 & 0x10)
-      strcat (str, " DC");
+      strcat(str, " DC");
 
    if (sb1 & 0x20)
-      strcat (str, " AUTO");
+      strcat(str, " AUTO");
 
    if (sb1 & 0x40)
-      strcat (str, " ???");
+      strcat(str, " ???");
 
    if (sb1 & 0x80)
-      strcat (str, " ???");
+      strcat(str, " ???");
 }
 
 
-void appendSB2 (char *str, int sb2) 
+void appendSB2(char *str, const int sb2)
 {
    if (sb2 & 0x01)
-      strcat (str, " Z3");
+      strcat(str, " Z3");
 
    if (sb2 & 0x02)
-      strcat (str, " n");
+      strcat(str, " n");
 
    if (sb2 & 0x04)
-      strcat (str, " Bat");
+      strcat(str, " Bat");
 
    if (sb2 & 0x08)
-      strcat (str, " APO");
+      strcat(str, " APO");
 
    if (sb2 & 0x10)
-      strcat (str, " MIN");
+      strcat(str, " MIN");
 
    if (sb2 & 0x20)
-      strcat (str, " MAX");
+      strcat(str, " MAX");
 
    if (sb2 & 0x40)
-      strcat (str, " Z2");
+      strcat(str, " Z2");
 
    if (sb2 & 0x80)
-      strcat (str, " Z1");
+      strcat(str, " Z1");
 }
 
 
-void appendSB3 (char *str, int sb3) 
+void appendSB3(char *str, const int sb3)
 {
    if (sb3 & 0x01)
-      strcat (str, " Z4");
+      strcat(str, " Z4");
 
    if (sb3 & 0x02)
-      strcat (str, " %");
+      strcat(str, " %");
 
    if (sb3 & 0x04)
-      strcat (str, " Diode");
+      strcat(str, " Diode");
 
    if (sb3 & 0x08)
-      strcat (str, " Beep");
+      strcat(str, " Beep");
 
    if (sb3 & 0x10)
-      strcat (str, " M");
+      strcat(str, " M");
 
    if (sb3 & 0x20)
-      strcat (str, " k");
+      strcat(str, " k");
 
    if (sb3 & 0x40)
-      strcat (str, " m");
+      strcat(str, " m");
 
    if (sb3 & 0x80)
-      strcat (str, " \xe6");  /* mu */
+      strcat(str, " \xe6");  /* mu */
 }
 
 
-void appendSB4 (char *str, int sb4) 
+void appendSB4(char *str, const int sb4)
 {
    if (sb4 & 0x01)
-      strcat (str, " \xf8" "F");
+      strcat(str, " \xf8" "F");
 
    if (sb4 & 0x02)
-      strcat (str, " \xf8" "C");
+      strcat(str, " \xf8" "C");
 
    if (sb4 & 0x04)
-      strcat (str, " F");
+      strcat(str, " F");
 
    if (sb4 & 0x08)
-      strcat (str, " Hz");
+      strcat(str, " Hz");
 
    if (sb4 & 0x10)
-      strcat (str, " hFE");
+      strcat(str, " hFE");
 
    if (sb4 & 0x20)
-      strcat (str, " Ohm");
+      strcat(str, " Ohm");
 
    if (sb4 & 0x40)
-      strcat (str, " Amp");
+      strcat(str, " Amp");
 
    if (sb4 & 0x80)
-      strcat (str, " Volt");
+      strcat(str, " Volt");
 }
 
 
-int main (int argc, char argv[])
+int main(const int argc, const char *const argv)
 {
    unsigned char lin[MAXLINE];
    char str[MAXLINE];
@@ -325,20 +323,20 @@ int main (int argc, char argv[])
    halfblob[0] = 0xdd;
    halfblob[1] = '\0';
 
-   Fd = openDMMPort ("/dev/ttyUSB1");
-   Fd = openBA63Port ("/dev/ttyUSB0");
+   Fd = openDMMPort("/dev/ttyUSB1");
+   Fd = openBA63Port("/dev/ttyUSB0");
 
-   set_code_page (0x34);
+   set_code_page(0x34);
    
-   clear_screen ();
+   clear_screen();
 
    for (;;) {
-      getReading (Dmmfp, lin);
+      getReading(Dmmfp, lin);
       modes[0] = '\0';
       units[0] = '\0';
       acdc[0] = '\0';
       
-      printf ("<%s>\n", lin);
+      printf("<%s>\n", lin);
       
       if (lin[0] == '-')
          str[0] = '-';
@@ -349,46 +347,46 @@ int main (int argc, char argv[])
       
       switch (lin[6]) {
       case '0':
-         strncat (str, &lin[1], 4);
-         strcat (str, ".");
+         strncat(str, &lin[1], 4);
+         strcat(str, ".");
          break;
       case '1':
-         strncat (str, &lin[1], 1);
-         strcat (str, ".");
-         strncat (str, &lin[2], 3);
+         strncat(str, &lin[1], 1);
+         strcat(str, ".");
+         strncat(str, &lin[2], 3);
          break;
       case '2':
-         strncat (str, &lin[1], 2);
-         strcat (str, ".");
-         strncat (str, &lin[3], 2);
+         strncat(str, &lin[1], 2);
+         strcat(str, ".");
+         strncat(str, &lin[3], 2);
          break;
       case '3':
       case '4':
-         strncat (str, &lin[1], 3);
-         strcat (str, ".");
-         strncat (str, &lin[4], 1);
+         strncat(str, &lin[1], 3);
+         strcat(str, ".");
+         strncat(str, &lin[4], 1);
          break;
       }
 
-      appendSB1 (modes, lin[7]);
-      appendSB2 (modes, lin[8]);
-      appendSB3 (units, lin[9]);
-      appendSB4 (units, lin[10]);
+      appendSB1(modes, lin[7]);
+      appendSB2(modes, lin[8]);
+      appendSB3(units, lin[9]);
+      appendSB4(units, lin[10]);
       
       if (lin[7] & 0x08)
-         strcat (acdc, " AC");
+         strcat(acdc, " AC");
       
       if (lin[7] & 0x10)
-         strcat (acdc, " DC");
+         strcat(acdc, " DC");
       
-      printf ("[%s %s %s] %d\n", str, units, modes, lin[11]);
-      cursor_home ();
+      printf("[%s %s %s] %d\n", str, units, modes, lin[11]);
+      cursor_home();
       display(str);
       display(units);
       display(acdc);
-      clear_to_eol ();
+      clear_to_eol();
       
-      cursor_rc (2, 1);
+      cursor_rc(2, 1);
       
       if (lin[7] & 0x01) {
          barg = lin[11] & 0x7f;
@@ -400,12 +398,12 @@ int main (int argc, char argv[])
             display(halfblob);
       }
 
-      clear_to_eol ();
+      clear_to_eol();
 
-      fflush (stdout);
+      fflush(stdout);
    }
    
-   close (Fd);
+   close(Fd);
    
    return (0);
 }
