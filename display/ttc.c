@@ -8,28 +8,28 @@
 #include <unistd.h>
 #include <termios.h>
 #include <fcntl.h>
+#include <signal.h>
+
+#define ESC    (0x1b)
 
 int Fd = 0;
 
-const int ESC = 0x1b;
 
-
-void display(const char *str)
+static void display(const char *const str)
 {
-   int n = strlen (str);
+   const int n = strlen(str);
    
    if (write(Fd, str, n) != n)
       perror("write");
 }
 
 
-static int openBA63Port(const char *port)
+static int openBA63Port(const char *const port)
 {
-   int fd;
    struct termios tbuf;
    long int fdflags;
 
-   fd = open(port, O_RDWR | O_NOCTTY | O_NDELAY);
+   const int fd = open(port, O_RDWR | O_NOCTTY | O_NDELAY);
    
    if (fd < 0) {
       perror(port);
@@ -106,19 +106,19 @@ void cursor_home(void)
 }
 
 
-void cursor_rc(int row, int col)
+void cursor_rc(const int row, const int col)
 {
    char buf[16];
    
    sprintf(buf, "%c[%d;%dH", ESC, row, col);
    
-   write(Fd, buf, strlen (buf));
+   write(Fd, buf, strlen(buf));
 }
 
 
-void set_code_page(int page)
+void set_code_page(const int page)
 {
-// display("\x1bR\x03");       // Select UK character set
+// display("\x1bR\x03");    // Select UK character set
 // display("\x1bR1");       // Select code page 850
 // display("\x1bR2");       // Select code page 852
 // display("\x1bR4");       // Select code page 858
@@ -132,15 +132,34 @@ void set_code_page(int page)
 }
 
 
-int main(int argc, char argv[])
+void handler(const int sig)
+{
+   clear_screen();
+   close(Fd);
+   exit(1);
+}
+
+
+int main(const int argc, const char *const argv)
 {
    time_t sec;
    struct tm *tm_p;
+   struct sigaction action;
    char buf[32];
    
    Fd = openBA63Port("/dev/ttyUSB0");
 
-   display("\x1bR\x03");       // Select UK character set
+   // Catch SIGINT so that we don't leave a non-updating time on the display
+   action.sa_flags = 0;
+   sigemptyset(&action.sa_mask);
+   action.sa_handler = handler;
+
+   if (sigaction(SIGINT, &action, NULL) < 0) {
+      perror("sigaction");
+      exit(1);
+   }
+
+   set_code_page(3);           // Select UK character set
    clear_screen();
    
    printf("time_t: %lu bytes\n", sizeof (sec));
