@@ -305,7 +305,7 @@ void appendSB4(char *str, const int sb4)
 }
 
 
-int main(const int argc, const char *const argv)
+int main(const int argc, const char *const argv[])
 {
    unsigned char lin[MAXLINE];
    char str[MAXLINE];

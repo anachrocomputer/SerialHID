@@ -12,6 +12,11 @@
 
 #define ESC    (0x1b)
 
+#define HEXTIME   (1)
+#define TIME_T    (2)
+#define PERCENT   (3)
+#define DECIMAL   (4)
+
 int Fd = 0;
 
 
@@ -140,12 +145,39 @@ void handler(const int sig)
 }
 
 
-int main(const int argc, const char *const argv)
+int main(const int argc, const char *const argv[])
 {
+   int mode = TIME_T;
    time_t sec;
    struct tm *tm_p;
    struct sigaction action;
+   unsigned int seconds_today;
+   unsigned int hexonds;
+   double percent;
    char buf[32];
+   
+   if (argc > 1) {
+      if (argv[1][0] == '-') {
+         switch (argv[1][1]) {
+         case 'X':
+         case 'x':
+            mode = HEXTIME;
+            break;
+         case 'T':
+         case 't':
+            mode = TIME_T;
+            break;
+         case 'P':
+         case 'p':
+            mode = PERCENT;
+            break;
+         case 'D':
+         case 'd':
+            mode = DECIMAL;
+            break;
+         }
+      }
+   }
    
    Fd = openBA63Port("/dev/ttyUSB0");
 
@@ -167,13 +199,31 @@ int main(const int argc, const char *const argv)
    for (;;) {
       time(&sec);
       tm_p = localtime(&sec);
+      seconds_today = (((tm_p->tm_hour * 60) + tm_p->tm_min)  * 60) + tm_p->tm_sec;
 
       cursor_home();
 
       strftime(buf, sizeof (buf), "%Y-%m-%d %H:%M:%S\r\n", tm_p);
       display(buf);
 
-      sprintf(buf, "time_t: %lu\r", sec);
+      switch (mode) {
+      case TIME_T:
+         sprintf(buf, "time_t: %lu\r", sec);
+         break;
+      case HEXTIME:
+         hexonds = (seconds_today * 0x10000ULL) / 86400ULL;
+         sprintf(buf, "0x%04X\r", hexonds);
+         break;
+      case PERCENT:
+         percent = (seconds_today * 100.0) / 86400.0;
+         sprintf(buf, "%2.2f%%\r", percent);
+         break;
+      case DECIMAL:
+         percent = seconds_today / 86400.0;
+         sprintf(buf, "%0.4f\r", percent);
+         break;
+      }
+
       display(buf);
       
       sleep(1);
