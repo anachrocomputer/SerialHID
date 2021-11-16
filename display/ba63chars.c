@@ -29,7 +29,7 @@ static int openBA63Port (const char *port)
    struct termios tbuf;
    long int fdflags;
 
-   fd = open (port, O_RDWR | O_NOCTTY | O_NDELAY);
+   fd = open (port, O_RDWR | O_NOCTTY | O_NONBLOCK);
    
    if (fd < 0) {
       perror (port);
@@ -41,7 +41,7 @@ static int openBA63Port (const char *port)
       exit (1);
    }
    
-   fdflags &= ~O_NDELAY;
+   fdflags &= ~O_NONBLOCK;
    
    if (fcntl (fd, F_SETFL, fdflags) < 0) {
       perror ("fcntl SETFL");
