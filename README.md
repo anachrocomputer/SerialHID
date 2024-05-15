@@ -20,7 +20,7 @@ Truedox 300 trackball.
 
 Some force-feedback joysticks were connected via serial because the original PC game
 port was input-only (analog pots and buttons).
-The force-feedback motors need much more powwer than RS-232 can supply, so these devices
+The force-feedback motors need much more power than RS-232 can supply, so these devices
 have external power supplies.
 Some joysticks were serial, such as the Logitech Wingman Force Feedback,
 whereas the Microsoft Sidewinder Force Feedback used the MIDI port included in
